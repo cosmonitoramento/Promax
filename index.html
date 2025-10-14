@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,8 +45,15 @@
         }
 
         @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         /* CONTAINER PRINCIPAL */
@@ -75,19 +83,22 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255, 255, 255, 0.03) 10px,
-                rgba(255, 255, 255, 0.03) 20px
-            );
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 255, 255, 0.03) 10px,
+                    rgba(255, 255, 255, 0.03) 20px);
             animation: movePattern 20s linear infinite;
         }
 
         @keyframes movePattern {
-            from { transform: translate(0, 0); }
-            to { transform: translate(50px, 50px); }
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(50px, 50px);
+            }
         }
 
         .header-content {
@@ -115,8 +126,15 @@
         }
 
         @keyframes rotate3d {
-            0%, 100% { transform: rotate3d(0, 1, 0, 0deg); }
-            50% { transform: rotate3d(0, 1, 0, 180deg); }
+
+            0%,
+            100% {
+                transform: rotate3d(0, 1, 0, 0deg);
+            }
+
+            50% {
+                transform: rotate3d(0, 1, 0, 180deg);
+            }
         }
 
         .logo-text h1 {
@@ -125,14 +143,21 @@
             font-weight: 900;
             color: white;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-                         0 0 40px rgba(255, 107, 53, 0.8);
+                0 0 40px rgba(255, 107, 53, 0.8);
             letter-spacing: 5px;
             animation: glow 2s ease-in-out infinite;
         }
 
         @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 107, 53, 0.8); }
-            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 53, 1); }
+
+            0%,
+            100% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 107, 53, 0.8);
+            }
+
+            50% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 53, 1);
+            }
         }
 
         .logo-text p {
@@ -287,13 +312,18 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             animation: rotate 10s linear infinite;
         }
 
         @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .colaborador-avatar {
@@ -577,7 +607,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             animation: rotate 15s linear infinite;
         }
 
@@ -641,33 +671,32 @@
             .main-layout {
                 grid-template-columns: 1fr;
             }
-            
+
             .side-panel {
                 border-right: none;
                 border-bottom: 3px solid rgba(255, 107, 53, 0.5);
             }
-            
+
             .epic-header {
                 padding: 30px 40px;
             }
-            
+
             .header-content {
                 flex-direction: column;
                 gap: 20px;
             }
-            
+
             .logo-text h1 {
                 font-size: 2.5em;
             }
         }
     </style>
 </head>
+
 <body>
-    <!-- CANVAS ANIMADO -->
     <canvas id="particles-canvas"></canvas>
 
     <div class="container">
-        <!-- HEADER ÉPICO -->
         <div class="epic-header">
             <div class="header-content">
                 <div class="header-left">
@@ -704,18 +733,14 @@
             </div>
         </div>
 
-        <!-- LAYOUT PRINCIPAL -->
         <div class="main-layout">
-            <!-- PAINEL LATERAL -->
             <div class="side-panel">
-                <!-- CARD DO COLABORADOR -->
                 <div class="colaborador-card" id="colaboradorCard" style="display: none;">
                     <div class="colaborador-avatar" id="colaboradorAvatar">👤</div>
                     <div class="colaborador-nome" id="colaboradorNome">Selecione um colaborador</div>
                     <div class="colaborador-equipe" id="colaboradorEquipe">---</div>
                 </div>
 
-                <!-- FORMULÁRIO -->
                 <div class="panel-section">
                     <div class="section-title">📅 Data</div>
                     <div class="form-group">
@@ -744,8 +769,10 @@
                 <div class="panel-section">
                     <div class="section-title">📊 Quantidade</div>
                     <div class="form-group">
-                        <input type="number" class="form-control" id="quantidade" min="0" step="0.5" placeholder="Digite a quantidade">
-                        <small id="unidadeInfo" style="color: rgba(255,255,255,0.7); display: block; margin-top: 8px; font-size: 0.85em;"></small>
+                        <input type="number" class="form-control" id="quantidade" min="0" step="0.5"
+                            placeholder="Digite a quantidade">
+                        <small id="unidadeInfo"
+                            style="color: rgba(255,255,255,0.7); display: block; margin-top: 8px; font-size: 0.85em;"></small>
                     </div>
                 </div>
 
@@ -787,7 +814,6 @@
                 </button>
             </div>
 
-            <!-- ÁREA PRINCIPAL -->
             <div class="main-area">
                 <div class="activities-header">
                     <div class="activities-title">📋 ATIVIDADES DO DIA</div>
@@ -823,12 +849,20 @@
 
     <script>
         // CONFIGURAÇÃO
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8JSS_7aWtqkOHcjqvNjraTZrP2uEIXfL_xLEDsJpcbWs1VeWWIVOVWxYAg5cQGWuK/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzMFUcmlaw1prk3tUomJNGwZOX6z5j2eXsgasMU1L-1P5pFgxCbDHV3kfzYQutnd4D/exec';
 
-        const fotosColaboradores = {};
-
+        // CORREÇÃO: O link da foto deve estar na propriedade 'imagem' de cada colaborador.
         const colaboradores = [
-            { nome: "ANDEILSSON AMARAL", equipe: "ALCATEIA", emoji: "🦊" },
+            {
+                nome: "ANDEILSSON AMARAL",
+                equipe: "ALCATEIA",
+                // Este link de teste (pravatar) DEVE aparecer agora!
+                imagem: "https://raw.githubusercontent.com/cosmonitoramento/Promax/refs/heads/main/andeilsson.jpg"
+            },
+
+          
+            // Alterei os colaboradores abaixo para usar 'imagem' se quiser adicionar fotos no futuro,
+            // ou 'emoji' para aparecer o emoji como fallback.
             { nome: "CLEMERSON SANTOS", equipe: "CAVEIRA", emoji: "💀" },
             { nome: "CRISTIANO BEZERRA", equipe: "ALPHA", emoji: "🐺" },
             { nome: "ÉRICA FRANCO", equipe: "DELTA", emoji: "🦅" },
@@ -938,20 +972,32 @@
             document.getElementById('emEquipe').addEventListener('change', calcularPontos);
         }
 
+        // FUNÇÃO CORRIGIDA PARA CARREGAR A IMAGEM
         function atualizarInfoColaborador() {
             const nomeColaborador = document.getElementById('colaborador').value;
             const colaborador = colaboradores.find(c => c.nome === nomeColaborador);
+            
+            // Exibir o card se um colaborador for selecionado
+            document.getElementById('colaboradorCard').style.display = colaborador ? 'block' : 'none';
+
             if (colaborador) {
                 const avatar = document.getElementById('colaboradorAvatar');
-                const urlFoto = fotosColaboradores[colaborador.nome];
-                document.getElementById('colaboradorCard').style.display = 'block';
+                const urlFoto = colaborador.imagem; // Busca a URL diretamente do objeto colaborador
+                
                 if (urlFoto && urlFoto.trim() !== '') {
+                    // Se houver URL de imagem, usa como background
                     avatar.style.backgroundImage = `url(${urlFoto})`;
                     avatar.textContent = '';
-                } else {
+                } else if (colaborador.emoji) {
+                    // Se não houver imagem, mas houver emoji, usa o emoji
                     avatar.style.backgroundImage = 'none';
                     avatar.textContent = colaborador.emoji;
+                } else {
+                    // Caso contrário, usa o ícone padrão
+                    avatar.style.backgroundImage = 'none';
+                    avatar.textContent = '👤';
                 }
+
                 document.getElementById('colaboradorNome').textContent = colaborador.nome;
                 document.getElementById('colaboradorEquipe').textContent = colaborador.equipe;
             }
@@ -961,7 +1007,7 @@
             const nomeAtividade = document.getElementById('atividade').value;
             const atividade = atividades.find(a => a.nome === nomeAtividade);
             if (atividade) {
-                document.getElementById('unidadeInfo').textContent = 
+                document.getElementById('unidadeInfo').textContent =
                     `💡 ${atividade.pontosPor} ${atividade.unidade} = ${atividade.pontosValor} ponto(s)`;
                 calcularPontos();
             }
@@ -1099,7 +1145,7 @@
         }
 
         function configurarFotos() {
-            alert('📸 Para adicionar fotos:\n\n1. Hospede as fotos online\n2. Adicione as URLs no objeto fotosColaboradores\n3. Recarregue a página');
+            alert('📸 Para adicionar fotos de todos os colaboradores:\n\n1. Hospede as fotos online (ex: Imgur, Dropbox Public Link, etc.)\n2. Edite o array "colaboradores" neste código, substituindo ou adicionando a propriedade "imagem" com a URL direta da foto.\n3. Recarregue a página.');
         }
 
         window.addEventListener('DOMContentLoaded', inicializar);
@@ -1109,4 +1155,5 @@
         });
     </script>
 </body>
+
 </html>
