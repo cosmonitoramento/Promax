@@ -27,7 +27,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            padding-top: 200px;
+            padding-top: 0;
         }
 
         /* CANVAS DE FUNDO ANIMADO */
@@ -46,137 +46,6 @@
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-        }
-
-        /* PLAYER DE VÍDEO NO TOPO - FIXO E COMPACTO */
-        .video-player-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999;
-            background: linear-gradient(135deg, rgba(10, 14, 39, 0.98), rgba(30, 60, 114, 0.98));
-            backdrop-filter: blur(20px);
-            border-bottom: 3px solid #ff6b35;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
-        }
-
-        .video-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 15px 30px;
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .video-frame {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.5);
-            border: 2px solid rgba(255, 107, 53, 0.4);
-        }
-
-        .video-frame iframe {
-            width: 400px;
-            height: 225px;
-            border: none;
-            display: block;
-        }
-
-        .video-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .video-info {
-            flex: 1;
-        }
-
-        .video-title {
-            color: white;
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .video-icon {
-            font-size: 1.5em;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .video-subtitle {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95em;
-        }
-
-        .playlist-controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .playlist-btn {
-            padding: 10px 18px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            white-space: nowrap;
-        }
-
-        .playlist-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .playlist-btn.active {
-            background: linear-gradient(135deg, #ff6b35, #f7931e);
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.6);
-        }
-
-        .playlist-selector {
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .playlist-selector select {
-            width: 100%;
-            padding: 10px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            color: white;
-            font-size: 0.95em;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .playlist-selector select:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #ff6b35;
-        }
-
-        .playlist-selector select option {
-            background: #1a1f3a;
-            color: white;
-            padding: 10px;
         }
 
         /* CONTAINER PRINCIPAL */
@@ -766,23 +635,9 @@
             .main-layout {
                 grid-template-columns: 400px 1fr;
             }
-            
-            .video-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .video-frame iframe {
-                width: 100%;
-                max-width: 400px;
-                margin: 0 auto;
-            }
         }
 
         @media (max-width: 1200px) {
-            body {
-                padding-top: 400px;
-            }
-            
             .main-layout {
                 grid-template-columns: 1fr;
             }
@@ -804,86 +659,12 @@
             .logo-text h1 {
                 font-size: 2.5em;
             }
-            
-            .video-controls {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
     <!-- CANVAS ANIMADO -->
     <canvas id="particles-canvas"></canvas>
-
-    <!-- PLAYER DE VÍDEO NO TOPO - COMPACTO -->
-    <div class="video-player-header">
-        <div class="video-container">
-            <div class="video-frame">
-                <iframe 
-                    id="youtubePlayer"
-                    src="https://www.youtube.com/embed/L_jWHffIx5E?autoplay=0&rel=0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            </div>
-            
-            <div class="video-controls">
-                <div class="video-info">
-                    <div class="video-title">
-                        <span class="video-icon">🎵</span>
-                        <span>MOTIVAÇÃO PROMAX</span>
-                    </div>
-                    <div class="video-subtitle" id="videoTitle">Eye of the Tiger - Survivor</div>
-                </div>
-                
-                <div class="playlist-controls">
-                    <button class="playlist-btn" onclick="previousVideo()">⏮️ Anterior</button>
-                    <button class="playlist-btn active" onclick="nextVideo()">Próximo ⏭️</button>
-                </div>
-                
-                <div class="playlist-selector">
-                    <select id="videoSelect" onchange="changeVideo(this.value, this.selectedIndex)">
-                        <!-- 
-                        ============================================
-                        🎵 ADICIONE SUAS MÚSICAS AQUI!
-                        ============================================
-                        
-                        FORMATO:
-                        <option value="ID_DO_VIDEO_YOUTUBE">Nome da Música - Artista</option>
-                        
-                        COMO PEGAR O ID:
-                        1. Abra o vídeo no YouTube
-                        2. Veja a URL: https://www.youtube.com/watch?v=ABC123XYZ
-                        3. O ID é a parte depois de "v=": ABC123XYZ
-                        
-                        EXEMPLO:
-                        <option value="dQw4w9WgXcQ">Never Gonna Give You Up - Rick Astley</option>
-                        
-                        ============================================
-                        -->
-                        
-                        <option value="j5-yKhDd64s">Eminem - Not Afraid</option>
-                        <option value="H58vbez_m4E">Kendrick Lamar - Not Like Us</option>
-                        <option value="9gWIIIr2Asw">Teddy Swims - Lose Control</option>
-                        <option value="pfxyk1glEq4">Chris Brown - Under The Influence</option>
-                        <option value="L_jWHffIx5E">Eye of the Tiger - Survivor</option>
-                        <option value="btPJPFnesV4">Stronger - Kanye West</option>
-                        <option value="5-sfG8BV8wU">Remember The Name - Fort Minor</option>
-                        <option value="ZSM3w1v-A_Y">Lose Yourself - Eminem</option>
-                        <option value="hHW1oY26kxQ">We Will Rock You - Queen</option>
-                        <option value="04854XqcfCY">The Final Countdown - Europe</option>
-                        <option value="pIgZ7gMze7A">Don't Stop Believin' - Journey</option>
-                        <option value="Y66j_BUCBMY">Thunderstruck - AC/DC</option>
-                        <option value="SlCRfTmBSGs">Til I Collapse - Eminem</option>
-                        <option value="dQw4w9WgXcQ">Never Gonna Give You Up - Rick Astley</option>
-                        
-                        <!-- ADICIONE MAIS MÚSICAS ABAIXO SEGUINDO O MESMO FORMATO -->
-                        
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container">
         <!-- HEADER ÉPICO -->
@@ -1042,7 +823,7 @@
 
     <script>
         // CONFIGURAÇÃO
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/SEU_SCRIPT_ID_AQUI/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8JSS_7aWtqkOHcjqvNjraTZrP2uEIXfL_xLEDsJpcbWs1VeWWIVOVWxYAg5cQGWuK/exec';
 
         const fotosColaboradores = {};
 
@@ -1099,27 +880,6 @@
         ];
 
         let atividadesDoDia = [];
-        let currentVideoIndex = 0;
-
-        /*
-        ============================================
-        🎵 ADICIONE OS IDs DOS VÍDEOS AQUI TAMBÉM!
-        ============================================
-        
-        Mantenha sincronizado com o select acima
-        */
-        const videos = [
-            { id: 'L_jWHffIx5E', title: 'Eye of the Tiger - Survivor' },
-            { id: 'btPJPFnesV4', title: 'Stronger - Kanye West' },
-            { id: '5-sfG8BV8wU', title: 'Remember The Name - Fort Minor' },
-            { id: 'ZSM3w1v-A_Y', title: 'Lose Yourself - Eminem' },
-            { id: 'hHW1oY26kxQ', title: 'We Will Rock You - Queen' },
-            { id: '04854XqcfCY', title: 'The Final Countdown - Europe' },
-            { id: 'pIgZ7gMze7A', title: "Don't Stop Believin' - Journey" },
-            { id: 'Y66j_BUCBMY', title: 'Thunderstruck - AC/DC' },
-            { id: 'SlCRfTmBSGs', title: 'Til I Collapse - Eminem' },
-            { id: 'dQw4w9WgXcQ', title: 'Never Gonna Give You Up - Rick Astley' }
-        ];
 
         // CANVAS ANIMADO
         const canvas = document.getElementById('particles-canvas');
@@ -1153,28 +913,6 @@
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
-
-        // CONTROLES DE VÍDEO
-        function changeVideo(videoId, index) {
-            if (index !== undefined) currentVideoIndex = index;
-            const iframe = document.getElementById('youtubePlayer');
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            document.getElementById('videoTitle').textContent = videos.find(v => v.id === videoId)?.title || 'Música Selecionada';
-        }
-
-        function nextVideo() {
-            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-            const select = document.getElementById('videoSelect');
-            select.selectedIndex = currentVideoIndex;
-            changeVideo(videos[currentVideoIndex].id);
-        }
-
-        function previousVideo() {
-            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
-            const select = document.getElementById('videoSelect');
-            select.selectedIndex = currentVideoIndex;
-            changeVideo(videos[currentVideoIndex].id);
-        }
 
         // INICIALIZAR
         function inicializar() {
