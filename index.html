@@ -812,7 +812,7 @@
                 nome: "ANDEILSSON AMARAL",
                 equipe: "ALCATEIA",
                 emoji: "🦊",
-                imagem: "" // ← COLE A URL DA FOTO AQUI
+                imagem: "https://raw.githubusercontent.com/cosmonitoramento/promax2/refs/heads/main/andeilsson2.jpg"
             },
             {
                 nome: "CLEMERSON SANTOS",
@@ -1054,14 +1054,35 @@
 
             if (colaborador) {
                 const avatar = document.getElementById('colaboradorAvatar');
-                const urlFoto = colaborador.imagem; // Busca diretamente do objeto
+                const urlFoto = colaborador.imagem;
+                
+                // 🔍 DEBUG - Mostra no console
+                console.log('📸 Colaborador:', colaborador.nome);
+                console.log('🔗 URL da foto:', urlFoto);
+                console.log('📝 Tem URL?', urlFoto && urlFoto.trim() !== '');
                 
                 if (urlFoto && urlFoto.trim() !== '') {
-                    // Se houver URL de imagem, usa como background
-                    avatar.style.backgroundImage = `url(${urlFoto})`;
-                    avatar.textContent = '';
+                    // Testa se a imagem carrega
+                    const testeImg = new Image();
+                    testeImg.onload = function() {
+                        console.log('✅ Imagem carregou com sucesso!');
+                        avatar.style.backgroundImage = `url(${urlFoto})`;
+                        avatar.textContent = '';
+                    };
+                    testeImg.onerror = function() {
+                        console.error('❌ ERRO ao carregar imagem!');
+                        console.error('Possíveis causas:');
+                        console.error('1. URL incorreta');
+                        console.error('2. Problema de CORS');
+                        console.error('3. Imagem não existe no servidor');
+                        console.error('4. URL precisa de autenticação');
+                        // Mostra emoji se falhar
+                        avatar.style.backgroundImage = 'none';
+                        avatar.textContent = colaborador.emoji + ' ⚠️';
+                    };
+                    testeImg.src = urlFoto;
                 } else {
-                    // Se não houver imagem, usa o emoji
+                    console.log('ℹ️ Sem URL de foto, mostrando emoji');
                     avatar.style.backgroundImage = 'none';
                     avatar.textContent = colaborador.emoji;
                 }
