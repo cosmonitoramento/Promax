@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROMAX 2025 - Dashboard Premium</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
 
@@ -20,7 +22,7 @@
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             position: relative;
             overflow-x: hidden;
         }
@@ -60,13 +62,10 @@
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 40px;
-            margin-bottom: 30px;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             border: 1px solid rgba(255,255,255,0.3);
             animation: fadeInDown 0.8s ease;
             position: relative;
@@ -100,9 +99,17 @@
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
         .header-left h1 {
             color: #1e3c72;
-            font-size: 3em;
+            font-size: 2em;
             font-weight: 800;
             margin-bottom: 5px;
             background: linear-gradient(45deg, #1e3c72, #ff6b35);
@@ -115,30 +122,37 @@
 
         .header-left .subtitle {
             color: #666;
-            font-size: 1.1em;
+            font-size: 0.95em;
             position: relative;
             z-index: 2;
         }
 
-        .btn-voltar, .btn-refresh {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn {
+            padding: 12px 25px;
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
-            display: inline-block;
-            font-size: 1.1em;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95em;
             position: relative;
-            z-index: 2;
             overflow: hidden;
         }
 
-        .btn-voltar::before, .btn-refresh::before {
+        .btn::before {
             content: '';
             position: absolute;
             top: 50%;
@@ -151,31 +165,38 @@
             transition: width 0.6s, height 0.6s;
         }
 
-        .btn-voltar:hover::before, .btn-refresh:hover::before {
+        .btn:hover::before {
             width: 300px;
             height: 300px;
         }
 
-        .btn-voltar:hover, .btn-refresh:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
         }
 
         .btn-refresh {
-            margin-left: 10px;
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
         }
 
         .btn-refresh:hover {
-            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.6);
+            box-shadow: 0 12px 35px rgba(40, 167, 69, 0.6);
+        }
+
+        .btn-pdf {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-pdf:hover {
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.6);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
             animation: fadeIn 1s ease 0.2s backwards;
         }
 
@@ -187,9 +208,9 @@
         .stat-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.3);
@@ -197,8 +218,8 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
         .stat-card::before {
@@ -213,14 +234,14 @@
 
         .stat-label {
             color: #666;
-            font-size: 0.95em;
+            font-size: 0.85em;
             margin-bottom: 8px;
             font-weight: 500;
         }
 
         .stat-value {
             color: #1e3c72;
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: 800;
             line-height: 1;
             margin-bottom: 5px;
@@ -228,7 +249,7 @@
 
         .stat-subvalue {
             color: #28a745;
-            font-size: 0.95em;
+            font-size: 0.85em;
             margin-top: 5px;
             font-weight: 600;
         }
@@ -236,10 +257,10 @@
         .section {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.3);
             animation: fadeInUp 0.8s ease backwards;
         }
@@ -262,9 +283,9 @@
 
         .section-title {
             color: #1e3c72;
-            font-size: 2em;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 3px solid transparent;
             border-image: linear-gradient(90deg, #ff6b35, #1e3c72) 1;
             font-weight: 700;
@@ -274,205 +295,245 @@
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 30px;
-            margin: 50px 0;
+            gap: 20px;
+            margin: 30px auto;
+            max-width: 900px;
         }
 
         .podium-place {
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            flex: 1;
+            max-width: 260px;
         }
 
         .podium-place:hover {
-            transform: translateY(-15px);
+            transform: translateY(-5px);
         }
 
-        .podium-avatar {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5em;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 5px solid;
-            transition: all 0.3s ease;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .podium-place.first .podium-avatar {
-            width: 130px;
-            height: 130px;
-            border-color: #FFD700;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            animation: goldGlow 2s infinite;
-        }
-
-        @keyframes goldGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
-        }
-
-        .podium-place.second .podium-avatar {
-            border-color: #C0C0C0;
-            background: linear-gradient(135deg, #E8E8E8, #C0C0C0);
-        }
-
-        .podium-place.third .podium-avatar {
-            border-color: #CD7F32;
-            background: linear-gradient(135deg, #F4A460, #CD7F32);
+        .podium-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            position: relative;
         }
 
         .podium-medal {
-            font-size: 3.5em;
-            margin-bottom: 15px;
+            font-size: 2.5em;
+            margin-bottom: 10px;
             animation: bounce 2s infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .podium-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 3px solid;
+            transition: all 0.3s ease;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+        }
+
+        .podium-avatar:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .podium-place.first .podium-avatar {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5em;
+            border-color: #FFD700;
+            animation: goldGlow 2s infinite;
+        }
+
+        @keyframes goldGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+        }
+
+        .podium-place.second .podium-avatar {
+            border-color: #C0C0C0;
+        }
+
+        .podium-place.third .podium-avatar {
+            border-color: #CD7F32;
         }
 
         .podium-name {
             font-weight: 700;
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 8px;
+            font-size: 1em;
+            color: #1e3c72;
+            margin-bottom: 5px;
+            line-height: 1.2;
         }
 
         .podium-equipe {
             color: #666;
-            font-size: 0.95em;
-            margin-bottom: 15px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
         }
 
         .podium-points {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 8px 16px;
+            border-radius: 20px;
             font-weight: 700;
-            font-size: 1.3em;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            font-size: 1.1em;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+            display: inline-block;
+            margin-bottom: 8px;
         }
 
         .podium-base {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px 15px 0 0;
-            padding: 25px 20px;
-            margin-top: 25px;
+            border-radius: 10px 10px 0 0;
+            padding: 15px 10px;
+            margin-top: 15px;
             color: white;
             font-weight: 600;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .podium-place.first .podium-base { height: 200px; }
-        .podium-place.second .podium-base { height: 160px; }
-        .podium-place.third .podium-base { height: 120px; }
+        .podium-place.first .podium-base { 
+            height: 140px;
+        }
+        
+        .podium-place.second .podium-base { 
+            height: 110px;
+        }
+        
+        .podium-place.third .podium-base { 
+            height: 80px;
+        }
 
         .ranking-list {
             display: grid;
-            gap: 18px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .ranking-item {
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 15px;
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 15px;
             transition: all 0.3s ease;
-            border-left: 5px solid #1e3c72;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #1e3c72;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .ranking-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border-left-width: 8px;
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border-left-width: 6px;
         }
 
         .ranking-position {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.3em;
-            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(30, 60, 114, 0.3);
+            flex-shrink: 0;
         }
 
         .ranking-avatar {
-            width: 70px;
-            height: 70px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2em;
+            font-size: 1.8em;
             border: 3px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             background-size: cover;
             background-position: center;
+            background-color: #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .ranking-avatar:not([style*="background-image"]) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .ranking-info {
             flex: 1;
+            min-width: 0;
         }
 
         .ranking-name {
             font-weight: 700;
-            font-size: 1.2em;
+            font-size: 1.05em;
             color: #1e3c72;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .ranking-equipe {
             color: #666;
-            font-size: 0.95em;
+            font-size: 0.85em;
         }
 
         .ranking-stats {
             text-align: right;
+            flex-shrink: 0;
         }
 
         .ranking-points {
-            font-size: 2em;
+            font-size: 1.6em;
             font-weight: 800;
             color: #28a745;
             line-height: 1;
         }
 
         .ranking-activities {
-            font-size: 0.9em;
+            font-size: 0.8em;
             color: #666;
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
         .equipes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .equipe-card {
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-top: 6px solid;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-top: 5px solid;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -495,8 +556,8 @@
         }
 
         .equipe-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
         }
 
         .equipe-card.alcateia { border-color: #FF6B35; }
@@ -507,16 +568,16 @@
         .equipe-header {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .equipe-emoji {
-            font-size: 3.5em;
+            font-size: 2.5em;
         }
 
         .equipe-name {
-            font-size: 1.6em;
+            font-size: 1.4em;
             font-weight: 800;
             color: #1e3c72;
         }
@@ -524,100 +585,300 @@
         .equipe-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .equipe-stat {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 12px;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
 
         .equipe-stat:hover {
             background: linear-gradient(135deg, #e9ecef, #dee2e6);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .equipe-stat-label {
             color: #666;
-            font-size: 0.9em;
-            margin-bottom: 8px;
+            font-size: 0.85em;
+            margin-bottom: 5px;
             font-weight: 500;
         }
 
         .equipe-stat-value {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: 800;
             color: #1e3c72;
         }
 
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .chart-container {
             background: linear-gradient(135deg, #f8f9fa, #ffffff);
-            padding: 25px;
-            border-radius: 15px;
-            height: 350px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            min-height: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .loading {
             text-align: center;
-            padding: 60px;
+            padding: 40px;
             color: #666;
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: 600;
         }
 
         .loading-spinner {
             display: inline-block;
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(102, 126, 234, 0.3);
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(102, 126, 234, 0.3);
             border-top-color: #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
+        /* MOBILE RESPONSIVO */
+        
+        /* Tablets e telas médias */
         @media (max-width: 1200px) {
             .charts-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .equipes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .podium {
+                gap: 15px;
+            }
+
+            .podium-place {
+                max-width: 220px;
+            }
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
             .header {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            .header-content {
                 flex-direction: column;
-                gap: 20px;
+                align-items: stretch;
             }
             
             .header-left h1 {
+                font-size: 1.5em;
+                text-align: center;
+            }
+
+            .header-left .subtitle {
+                text-align: center;
+                font-size: 0.85em;
+            }
+
+            .header-buttons {
+                justify-content: center;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-value {
                 font-size: 2em;
+            }
+
+            .stat-label,
+            .stat-subvalue {
+                font-size: 0.75em;
+            }
+
+            .section {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            .section-title {
+                font-size: 1.3em;
             }
             
             .podium {
                 flex-direction: column;
                 align-items: center;
+                gap: 15px;
             }
             
             .podium-place {
                 width: 100%;
+                max-width: 300px;
+            }
+
+            .podium-content {
+                padding: 15px;
+            }
+
+            .podium-avatar {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8em;
+            }
+
+            .podium-place.first .podium-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 2.2em;
+            }
+
+            .podium-medal {
+                font-size: 2em;
+            }
+
+            .podium-name {
+                font-size: 0.95em;
+            }
+
+            .podium-equipe {
+                font-size: 0.8em;
+            }
+
+            .podium-points {
+                font-size: 1em;
+                padding: 6px 14px;
+            }
+
+            .podium-base {
+                padding: 12px;
+                margin-top: 10px;
+                font-size: 0.85em;
+            }
+
+            .podium-place.first .podium-base,
+            .podium-place.second .podium-base,
+            .podium-place.third .podium-base {
+                height: 70px;
             }
             
+            .ranking-item {
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .ranking-position {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+
+            .ranking-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5em;
+            }
+
+            .ranking-name {
+                font-size: 0.95em;
+            }
+
+            .ranking-equipe {
+                font-size: 0.75em;
+            }
+
+            .ranking-points {
+                font-size: 1.4em;
+            }
+
+            .ranking-activities {
+                font-size: 0.7em;
+            }
+            
+            .equipes-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .equipe-card {
+                padding: 20px;
+            }
+
+            .equipe-emoji {
+                font-size: 2em;
+            }
+
+            .equipe-name {
+                font-size: 1.2em;
+            }
+
+            .equipe-stat-value {
+                font-size: 1.5em;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .chart-container {
+                padding: 15px;
+                min-height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .header-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .podium-place {
+                max-width: 280px;
             }
         }
     </style>
@@ -625,13 +886,21 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="header-left">
-                <h1>🏆 PROMAX 2025 - Dashboard</h1>
-                <p class="subtitle">Rankings e Análises em Tempo Real</p>
-            </div>
-            <div style="position: relative; z-index: 2;">
-                <a href="#" onclick="window.location.href='promax-sistema.html'" class="btn-voltar">📝 Registro</a>
-                <button class="btn-refresh" onclick="carregarDados()">🔄 Atualizar</button>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🏆 PROMAX 2025</h1>
+                    <p class="subtitle">Rankings e Análises em Tempo Real</p>
+                </div>
+                <div class="header-buttons">
+                    <button class="btn btn-refresh" onclick="carregarDados()">
+                        <span>🔄</span>
+                        <span>Atualizar</span>
+                    </button>
+                    <button class="btn btn-pdf" onclick="salvarPDF()">
+                        <span>📄</span>
+                        <span>Salvar PDF</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -660,7 +929,7 @@
         </div>
 
         <!-- PÓDIO -->
-        <div class="section">
+        <div class="section" id="podiumSection">
             <h2 class="section-title">🥇 Pódio - Top 3</h2>
             <div class="podium" id="podium">
                 <div class="loading">
@@ -693,7 +962,7 @@
         </div>
 
         <!-- GRÁFICOS -->
-        <div class="section">
+        <div class="section" id="chartsSection">
             <h2 class="section-title">📈 Análises e Gráficos</h2>
             <div class="charts-grid">
                 <div class="chart-container">
@@ -702,42 +971,21 @@
                 <div class="chart-container">
                     <canvas id="chartAtividadesMaisFeitas"></canvas>
                 </div>
+                <div class="chart-container">
+                    <canvas id="chartPontosEquipes"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chartTop10Pessoas"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 🔧 COLE SUA URL DO GOOGLE APPS SCRIPT AQUI
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzMFUcmlaw1prk3tUomJNGwZOX6z5j2eXsgasMU1L-1P5pFgxCbDHV3kfzYQutnd4D/exec';
  
-        // 📸 FOTOS DOS COLABORADORES (mesmas do sistema)
         const fotosColaboradores = {
-            'ANDEILSSON AMARAL': '',
-            'CLEMERSON SANTOS': '',
-            'CRISTIANO BEZERRA': '',
-            'ÉRICA FRANCO': '',
-            'FLÁVIO PARRALEI': '',
-            'INGRID VERONICA': '',
-            'IVAR ARAUJO': '',
-            'JANAINA DA SILVA': '',
-            'JEOZADAQUE DA SILVA': '',
-            'JOSILENE DOS SANTOS': '',
-            'KAIQUE LOPES': '',
-            'LARISSA MENDES': '',
-            'LUAN CELESTINO': '',
-            'LUCAS CORTES': '',
-            'LUCICLEI RAMOS': '',
-            'MANOEL JUNIOR': '',
-            'MARCELO AUGUSTO': '',
-            'MARIA JARLENE': '',
-            'QUEZIA NEVES': '',
-            'RONIELSON CASSEMIRO': '',
-            'SÁVIO DUARTE': '',
-            'SIDNEI MELO': '',
-            'SUELEN DAINE': '',
-            'VITOR DA OLIVEIRA': '',
-            'VITORIA ALVES': '',
-            'WASHINGTON LUIS': ''
+            'ANDEILSSON AMARAL': 'https://raw.githubusercontent.com/cosmonitoramento/promax2/refs/heads/main/andeilsson2.jpg'
         };
 
         let charts = {};
@@ -760,7 +1008,7 @@
                     renderizarPodio(dados.rankingPessoal);
                     renderizarRankingCompleto(dados.rankingPessoal);
                     renderizarRankingEquipes(dados.rankingEquipes);
-                    renderizarGraficos(dados.graficosPorDia, dados.atividadesMaisFeitas);
+                    renderizarGraficos(dados);
                 }
                 
             } catch (error) {
@@ -810,17 +1058,19 @@
             podium.innerHTML = ordem.map((pessoa, index) => {
                 const realIndex = index === 0 ? 1 : (index === 1 ? 0 : 2);
                 const urlFoto = fotosColaboradores[pessoa.colaborador];
-                const avatarContent = urlFoto ? 
-                    `style="background-image: url(${urlFoto});"` : 
-                    `>${emojis[pessoa.equipe] || '👤'}`;
+                const avatarStyle = urlFoto ? 
+                    `style="background-image: url(${urlFoto});"` : '';
+                const avatarEmoji = urlFoto ? '' : emojis[pessoa.equipe] || '👤';
                 
                 return `
                     <div class="podium-place ${classes[realIndex]}">
-                        <div class="podium-medal">${medals[realIndex]}</div>
-                        <div class="podium-avatar" ${avatarContent}</div>
-                        <div class="podium-name">${pessoa.colaborador}</div>
-                        <div class="podium-equipe">🏆 ${pessoa.equipe}</div>
-                        <div class="podium-points">${Math.round(pessoa.pontos)} pts</div>
+                        <div class="podium-content">
+                            <div class="podium-medal">${medals[realIndex]}</div>
+                            <div class="podium-avatar" ${avatarStyle}>${avatarEmoji}</div>
+                            <div class="podium-name">${pessoa.colaborador}</div>
+                            <div class="podium-equipe">🏆 ${pessoa.equipe}</div>
+                            <div class="podium-points">${Math.round(pessoa.pontos)} pts</div>
+                        </div>
                         <div class="podium-base">
                             ${pessoa.atividades} atividades
                         </div>
@@ -846,14 +1096,14 @@
             
             container.innerHTML = ranking.slice(0, 20).map((pessoa, index) => {
                 const urlFoto = fotosColaboradores[pessoa.colaborador];
-                const avatarContent = urlFoto ? 
-                    `style="background-image: url(${urlFoto});"` : 
-                    `>${emojis[pessoa.equipe] || '👤'}`;
+                const avatarStyle = urlFoto ? 
+                    `style="background-image: url(${urlFoto});"` : '';
+                const avatarEmoji = urlFoto ? '' : emojis[pessoa.equipe] || '👤';
                 
                 return `
                 <div class="ranking-item">
                     <div class="ranking-position">${index + 1}º</div>
-                    <div class="ranking-avatar" ${avatarContent}</div>
+                    <div class="ranking-avatar" ${avatarStyle}>${avatarEmoji}</div>
                     <div class="ranking-info">
                         <div class="ranking-name">${pessoa.colaborador}</div>
                         <div class="ranking-equipe">🏆 ${pessoa.equipe}</div>
@@ -915,18 +1165,19 @@
             `).join('');
         }
 
-        function renderizarGraficos(dadosDias, atividadesMaisFeitas) {
-            if (dadosDias && dadosDias.length > 0) {
+        function renderizarGraficos(dados) {
+            // Gráfico 1: Evolução dos últimos 7 dias
+            if (dados.graficosPorDia && dados.graficosPorDia.length > 0) {
                 const ctx1 = document.getElementById('chartAtividadesDias');
                 if (charts.dias) charts.dias.destroy();
                 
                 charts.dias = new Chart(ctx1, {
                     type: 'line',
                     data: {
-                        labels: dadosDias.map(d => d.data),
+                        labels: dados.graficosPorDia.map(d => d.data),
                         datasets: [{
                             label: 'Atividades',
-                            data: dadosDias.map(d => d.atividades),
+                            data: dados.graficosPorDia.map(d => d.atividades),
                             borderColor: '#1e3c72',
                             backgroundColor: 'rgba(30, 60, 114, 0.1)',
                             tension: 0.4,
@@ -934,7 +1185,7 @@
                             borderWidth: 3
                         }, {
                             label: 'Pontos',
-                            data: dadosDias.map(d => d.pontos),
+                            data: dados.graficosPorDia.map(d => d.pontos),
                             borderColor: '#28a745',
                             backgroundColor: 'rgba(40, 167, 69, 0.1)',
                             tension: 0.4,
@@ -949,7 +1200,7 @@
                             title: {
                                 display: true,
                                 text: 'Evolução dos Últimos 7 Dias',
-                                font: { size: 18, weight: 'bold', family: 'Poppins' }
+                                font: { size: 16, weight: 'bold', family: 'Poppins' }
                             },
                             legend: {
                                 display: true,
@@ -970,16 +1221,17 @@
                 });
             }
             
-            if (atividadesMaisFeitas && atividadesMaisFeitas.length > 0) {
+            // Gráfico 2: Atividades mais realizadas
+            if (dados.atividadesMaisFeitas && dados.atividadesMaisFeitas.length > 0) {
                 const ctx2 = document.getElementById('chartAtividadesMaisFeitas');
                 if (charts.atividades) charts.atividades.destroy();
                 
-                const top5 = atividadesMaisFeitas.slice(0, 5);
+                const top5 = dados.atividadesMaisFeitas.slice(0, 5);
                 
                 charts.atividades = new Chart(ctx2, {
                     type: 'bar',
                     data: {
-                        labels: top5.map(a => a.atividade.substring(0, 20)),
+                        labels: top5.map(a => a.atividade.substring(0, 15)),
                         datasets: [{
                             label: 'Quantidade',
                             data: top5.map(a => a.quantidade),
@@ -990,7 +1242,7 @@
                                 'rgba(255, 193, 7, 0.8)',
                                 'rgba(118, 75, 162, 0.8)'
                             ],
-                            borderRadius: 10
+                            borderRadius: 8
                         }]
                     },
                     options: {
@@ -999,8 +1251,8 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Top 5 Atividades Mais Realizadas',
-                                font: { size: 18, weight: 'bold', family: 'Poppins' }
+                                text: 'Top 5 Atividades',
+                                font: { size: 16, weight: 'bold', family: 'Poppins' }
                             },
                             legend: { display: false }
                         },
@@ -1010,11 +1262,154 @@
                                 ticks: { font: { family: 'Poppins' } }
                             },
                             x: {
-                                ticks: { font: { family: 'Poppins' } }
+                                ticks: { font: { family: 'Poppins', size: 10 } }
                             }
                         }
                     }
                 });
+            }
+
+            // Gráfico 3: Distribuição de Pontos por Equipe (Pizza)
+            if (dados.rankingEquipes && dados.rankingEquipes.length > 0) {
+                const ctx3 = document.getElementById('chartPontosEquipes');
+                if (charts.equipesPizza) charts.equipesPizza.destroy();
+                
+                charts.equipesPizza = new Chart(ctx3, {
+                    type: 'doughnut',
+                    data: {
+                        labels: dados.rankingEquipes.map(e => e.equipe),
+                        datasets: [{
+                            data: dados.rankingEquipes.map(e => Math.round(e.pontos)),
+                            backgroundColor: [
+                                'rgba(255, 107, 53, 0.8)',
+                                'rgba(30, 60, 114, 0.8)',
+                                'rgba(40, 167, 69, 0.8)',
+                                'rgba(255, 193, 7, 0.8)'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Distribuição por Equipes',
+                                font: { size: 16, weight: 'bold', family: 'Poppins' }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: { font: { family: 'Poppins' } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico 4: Top 10 Pessoas (Barras Horizontais)
+            if (dados.rankingPessoal && dados.rankingPessoal.length > 0) {
+                const ctx4 = document.getElementById('chartTop10Pessoas');
+                if (charts.top10) charts.top10.destroy();
+                
+                const top10 = dados.rankingPessoal.slice(0, 10);
+                
+                charts.top10 = new Chart(ctx4, {
+                    type: 'bar',
+                    data: {
+                        labels: top10.map(p => p.colaborador.split(' ')[0]),
+                        datasets: [{
+                            label: 'Pontos',
+                            data: top10.map(p => Math.round(p.pontos)),
+                            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Top 10 Colaboradores',
+                                font: { size: 16, weight: 'bold', family: 'Poppins' }
+                            },
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: { font: { family: 'Poppins' } }
+                            },
+                            y: {
+                                ticks: { font: { family: 'Poppins', size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        async function salvarPDF() {
+            const btn = document.querySelector('.btn-pdf');
+            const textoOriginal = btn.innerHTML;
+            btn.innerHTML = '<span>⏳</span><span>Gerando...</span>';
+            btn.disabled = true;
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                let yPosition = 20;
+
+                // Título
+                pdf.setFontSize(20);
+                pdf.setTextColor(30, 60, 114);
+                pdf.text('🏆 PROMAX 2025 - Dashboard', pageWidth / 2, yPosition, { align: 'center' });
+                yPosition += 10;
+
+                pdf.setFontSize(12);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, pageWidth / 2, yPosition, { align: 'center' });
+                yPosition += 15;
+
+                // Capturar seções
+                const sections = ['podiumSection', 'chartsSection'];
+                
+                for (const sectionId of sections) {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const canvas = await html2canvas(section, {
+                            scale: 2,
+                            backgroundColor: '#ffffff'
+                        });
+                        
+                        const imgData = canvas.toDataURL('image/png');
+                        const imgWidth = pageWidth - 20;
+                        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                        
+                        if (yPosition + imgHeight > pageHeight - 20) {
+                            pdf.addPage();
+                            yPosition = 20;
+                        }
+                        
+                        pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, imgHeight);
+                        yPosition += imgHeight + 10;
+                    }
+                }
+
+                pdf.save(`PROMAX_2025_Dashboard_${new Date().toISOString().split('T')[0]}.pdf`);
+                alert('✅ PDF gerado com sucesso!');
+                
+            } catch (error) {
+                console.error('Erro ao gerar PDF:', error);
+                alert('❌ Erro ao gerar PDF. Tente novamente.');
+            } finally {
+                btn.innerHTML = textoOriginal;
+                btn.disabled = false;
             }
         }
 
@@ -1029,5 +1424,4 @@
         });
     </script>
 </body>
-
 </html>
