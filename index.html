@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +30,6 @@
             padding-top: 0;
         }
 
-        /* CANVAS DE FUNDO ANIMADO */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -45,18 +43,10 @@
         }
 
         @keyframes gradientShift {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        /* CONTAINER PRINCIPAL */
         .container {
             position: relative;
             z-index: 1;
@@ -65,7 +55,6 @@
             padding: 0;
         }
 
-        /* HEADER FULLWIDTH ÉPICO */
         .epic-header {
             background: linear-gradient(135deg, rgba(30, 60, 114, 0.95), rgba(255, 107, 53, 0.95));
             backdrop-filter: blur(20px);
@@ -83,22 +72,13 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: repeating-linear-gradient(45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(255, 255, 255, 0.03) 10px,
-                    rgba(255, 255, 255, 0.03) 20px);
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.03) 10px, rgba(255, 255, 255, 0.03) 20px);
             animation: movePattern 20s linear infinite;
         }
 
         @keyframes movePattern {
-            from {
-                transform: translate(0, 0);
-            }
-
-            to {
-                transform: translate(50px, 50px);
-            }
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 50px); }
         }
 
         .header-content {
@@ -126,15 +106,8 @@
         }
 
         @keyframes rotate3d {
-
-            0%,
-            100% {
-                transform: rotate3d(0, 1, 0, 0deg);
-            }
-
-            50% {
-                transform: rotate3d(0, 1, 0, 180deg);
-            }
+            0%, 100% { transform: rotate3d(0, 1, 0, 0deg); }
+            50% { transform: rotate3d(0, 1, 0, 180deg); }
         }
 
         .logo-text h1 {
@@ -142,22 +115,14 @@
             font-size: 3.5em;
             font-weight: 900;
             color: white;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-                0 0 40px rgba(255, 107, 53, 0.8);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 107, 53, 0.8);
             letter-spacing: 5px;
             animation: glow 2s ease-in-out infinite;
         }
 
         @keyframes glow {
-
-            0%,
-            100% {
-                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 107, 53, 0.8);
-            }
-
-            50% {
-                text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 53, 1);
-            }
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 107, 53, 0.8); }
+            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 53, 1); }
         }
 
         .logo-text p {
@@ -240,7 +205,6 @@
             box-shadow: 0 15px 50px rgba(255, 255, 255, 0.4);
         }
 
-        /* LAYOUT FULLWIDTH */
         .main-layout {
             display: grid;
             grid-template-columns: 450px 1fr;
@@ -248,7 +212,6 @@
             position: relative;
         }
 
-        /* PAINEL LATERAL */
         .side-panel {
             background: rgba(10, 14, 39, 0.95);
             backdrop-filter: blur(20px);
@@ -312,18 +275,13 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             animation: rotate 10s linear infinite;
         }
 
         @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .colaborador-avatar {
@@ -477,7 +435,6 @@
             box-shadow: 0 15px 40px rgba(40, 167, 69, 0.6);
         }
 
-        /* ÁREA PRINCIPAL */
         .main-area {
             background: rgba(26, 31, 58, 0.6);
             backdrop-filter: blur(10px);
@@ -607,7 +564,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             animation: rotate 15s linear infinite;
         }
 
@@ -671,28 +628,27 @@
             .main-layout {
                 grid-template-columns: 1fr;
             }
-
+            
             .side-panel {
                 border-right: none;
                 border-bottom: 3px solid rgba(255, 107, 53, 0.5);
             }
-
+            
             .epic-header {
                 padding: 30px 40px;
             }
-
+            
             .header-content {
                 flex-direction: column;
                 gap: 20px;
             }
-
+            
             .logo-text h1 {
                 font-size: 2.5em;
             }
         }
     </style>
 </head>
-
 <body>
     <canvas id="particles-canvas"></canvas>
 
@@ -725,9 +681,6 @@
                 <div class="header-actions">
                     <button class="btn-epic" onclick="window.location.href='promax-dashboard.html'">
                         📊 DASHBOARD COMPLETO
-                    </button>
-                    <button class="btn-epic" onclick="configurarFotos()">
-                        📸 CONFIGURAR FOTOS
                     </button>
                 </div>
             </div>
@@ -769,10 +722,8 @@
                 <div class="panel-section">
                     <div class="section-title">📊 Quantidade</div>
                     <div class="form-group">
-                        <input type="number" class="form-control" id="quantidade" min="0" step="0.5"
-                            placeholder="Digite a quantidade">
-                        <small id="unidadeInfo"
-                            style="color: rgba(255,255,255,0.7); display: block; margin-top: 8px; font-size: 0.85em;"></small>
+                        <input type="number" class="form-control" id="quantidade" min="0" step="0.5" placeholder="Digite a quantidade">
+                        <small id="unidadeInfo" style="color: rgba(255,255,255,0.7); display: block; margin-top: 8px; font-size: 0.85em;"></small>
                     </div>
                 </div>
 
@@ -848,46 +799,171 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzMFUcmlaw1prk3tUomJNGwZOX6z5j2eXsgasMU1L-1P5pFgxCbDHV3kfzYQutnd4D/exec';
 
-        // CORREÇÃO: O link da foto deve estar na propriedade 'imagem' de cada colaborador.
+        // ========================================
+        // 📸 ADICIONE AS FOTOS AQUI!
+        // ========================================
+        // Cole a URL da foto na propriedade 'imagem'
+        // Se não tiver foto, deixe vazio "" e o emoji aparecerá
+        
         const colaboradores = [
             {
                 nome: "ANDEILSSON AMARAL",
                 equipe: "ALCATEIA",
-                // Este link de teste (pravatar) DEVE aparecer agora!
-                imagem: "https://raw.githubusercontent.com/cosmonitoramento/Promax/refs/heads/main/andeilsson.jpg"
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
             },
-
-          
-            // Alterei os colaboradores abaixo para usar 'imagem' se quiser adicionar fotos no futuro,
-            // ou 'emoji' para aparecer o emoji como fallback.
-            { nome: "CLEMERSON SANTOS", equipe: "CAVEIRA", emoji: "💀" },
-            { nome: "CRISTIANO BEZERRA", equipe: "ALPHA", emoji: "🐺" },
-            { nome: "ÉRICA FRANCO", equipe: "DELTA", emoji: "🦅" },
-            { nome: "FLÁVIO PARRALEI", equipe: "ALCATEIA", emoji: "🦊" },
-            { nome: "INGRID VERONICA", equipe: "CAVEIRA", emoji: "💀" },
-            { nome: "IVAR ARAUJO", equipe: "ALPHA", emoji: "🐺" },
-            { nome: "JANAINA DA SILVA", equipe: "DELTA", emoji: "🦅" },
-            { nome: "JEOZADAQUE DA SILVA", equipe: "ALCATEIA", emoji: "🦊" },
-            { nome: "JOSILENE DOS SANTOS", equipe: "CAVEIRA", emoji: "💀" },
-            { nome: "KAIQUE LOPES", equipe: "ALPHA", emoji: "🐺" },
-            { nome: "LARISSA MENDES", equipe: "DELTA", emoji: "🦅" },
-            { nome: "LUAN CELESTINO", equipe: "ALCATEIA", emoji: "🦊" },
-            { nome: "LUCAS CORTES", equipe: "CAVEIRA", emoji: "💀" },
-            { nome: "LUCICLEI RAMOS", equipe: "ALPHA", emoji: "🐺" },
-            { nome: "MANOEL JUNIOR", equipe: "DELTA", emoji: "🦅" },
-            { nome: "MARCELO AUGUSTO", equipe: "ALCATEIA", emoji: "🦊" },
-            { nome: "MARIA JARLENE", equipe: "CAVEIRA", emoji: "💀" },
-            { nome: "QUEZIA NEVES", equipe: "ALPHA", emoji: "🐺" },
-            { nome: "RONIELSON CASSEMIRO", equipe: "DELTA", emoji: "🦅" },
-            { nome: "SÁVIO DUARTE", equipe: "ALCATEIA", emoji: "🦊" },
-            { nome: "SIDNEI MELO", equipe: "CAVEIRA", emoji: "💀" },
-            { nome: "SUELEN DAINE", equipe: "ALPHA", emoji: "🐺" },
-            { nome: "VITOR DA OLIVEIRA", equipe: "DELTA", emoji: "🦅" },
-            { nome: "VITORIA ALVES", equipe: "ALCATEIA", emoji: "🦊" },
-            { nome: "WASHINGTON LUIS", equipe: "CAVEIRA", emoji: "💀" }
+            {
+                nome: "CLEMERSON SANTOS",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "CRISTIANO BEZERRA",
+                equipe: "ALPHA",
+                emoji: "🐺",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "ÉRICA FRANCO",
+                equipe: "DELTA",
+                emoji: "🦅",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "FLÁVIO PARRALEI",
+                equipe: "ALCATEIA",
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "INGRID VERONICA",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "IVAR ARAUJO",
+                equipe: "ALPHA",
+                emoji: "🐺",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "JANAINA DA SILVA",
+                equipe: "DELTA",
+                emoji: "🦅",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "JEOZADAQUE DA SILVA",
+                equipe: "ALCATEIA",
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "JOSILENE DOS SANTOS",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "KAIQUE LOPES",
+                equipe: "ALPHA",
+                emoji: "🐺",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "LARISSA MENDES",
+                equipe: "DELTA",
+                emoji: "🦅",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "LUAN CELESTINO",
+                equipe: "ALCATEIA",
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "LUCAS CORTES",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "LUCICLEI RAMOS",
+                equipe: "ALPHA",
+                emoji: "🐺",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "MANOEL JUNIOR",
+                equipe: "DELTA",
+                emoji: "🦅",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "MARCELO AUGUSTO",
+                equipe: "ALCATEIA",
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "MARIA JARLENE",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "QUEZIA NEVES",
+                equipe: "ALPHA",
+                emoji: "🐺",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "RONIELSON CASSEMIRO",
+                equipe: "DELTA",
+                emoji: "🦅",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "SÁVIO DUARTE",
+                equipe: "ALCATEIA",
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "SIDNEI MELO",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "SUELEN DAINE",
+                equipe: "ALPHA",
+                emoji: "🐺",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "VITOR DA OLIVEIRA",
+                equipe: "DELTA",
+                emoji: "🦅",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "VITORIA ALVES",
+                equipe: "ALCATEIA",
+                emoji: "🦊",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            },
+            {
+                nome: "WASHINGTON LUIS",
+                equipe: "CAVEIRA",
+                emoji: "💀",
+                imagem: "" // ← COLE A URL DA FOTO AQUI
+            }
         ];
 
         const atividades = [
@@ -915,7 +991,6 @@
 
         let atividadesDoDia = [];
 
-        // CANVAS ANIMADO
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -948,7 +1023,6 @@
         }
         animateParticles();
 
-        // INICIALIZAR
         function inicializar() {
             document.getElementById('dataAtividade').valueAsDate = new Date();
             const selectColab = document.getElementById('colaborador');
@@ -972,30 +1046,24 @@
             document.getElementById('emEquipe').addEventListener('change', calcularPontos);
         }
 
-        // FUNÇÃO CORRIGIDA PARA CARREGAR A IMAGEM
         function atualizarInfoColaborador() {
             const nomeColaborador = document.getElementById('colaborador').value;
             const colaborador = colaboradores.find(c => c.nome === nomeColaborador);
             
-            // Exibir o card se um colaborador for selecionado
             document.getElementById('colaboradorCard').style.display = colaborador ? 'block' : 'none';
 
             if (colaborador) {
                 const avatar = document.getElementById('colaboradorAvatar');
-                const urlFoto = colaborador.imagem; // Busca a URL diretamente do objeto colaborador
+                const urlFoto = colaborador.imagem; // Busca diretamente do objeto
                 
                 if (urlFoto && urlFoto.trim() !== '') {
                     // Se houver URL de imagem, usa como background
                     avatar.style.backgroundImage = `url(${urlFoto})`;
                     avatar.textContent = '';
-                } else if (colaborador.emoji) {
-                    // Se não houver imagem, mas houver emoji, usa o emoji
+                } else {
+                    // Se não houver imagem, usa o emoji
                     avatar.style.backgroundImage = 'none';
                     avatar.textContent = colaborador.emoji;
-                } else {
-                    // Caso contrário, usa o ícone padrão
-                    avatar.style.backgroundImage = 'none';
-                    avatar.textContent = '👤';
                 }
 
                 document.getElementById('colaboradorNome').textContent = colaborador.nome;
@@ -1007,7 +1075,7 @@
             const nomeAtividade = document.getElementById('atividade').value;
             const atividade = atividades.find(a => a.nome === nomeAtividade);
             if (atividade) {
-                document.getElementById('unidadeInfo').textContent =
+                document.getElementById('unidadeInfo').textContent = 
                     `💡 ${atividade.pontosPor} ${atividade.unidade} = ${atividade.pontosValor} ponto(s)`;
                 calcularPontos();
             }
@@ -1121,31 +1189,48 @@
         }
 
         async function salvarTodasAtividades() {
-            if (atividadesDoDia.length === 0) return alert('Nenhuma atividade para salvar!');
-            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('SEU_SCRIPT_ID_AQUI')) {
-                return alert('Configure a URL do Google Apps Script!');
+            if (atividadesDoDia.length === 0) {
+                alert('⚠️ Nenhuma atividade para salvar!');
+                return;
             }
+            
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('SEU_SCRIPT_ID_AQUI')) {
+                alert('⚠️ Configure a URL do Google Apps Script!');
+                return;
+            }
+
             try {
+                const btnSalvar = document.querySelector('.btn-save-all');
+                const textoOriginal = btnSalvar.textContent;
+                btnSalvar.textContent = '💾 SALVANDO...';
+                btnSalvar.disabled = true;
+
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({ atividades: atividadesDoDia })
                 });
-                if (response.ok) {
-                    const resultado = await response.json();
-                    if (resultado.status === 'success') {
-                        alert('✅ Salvo com sucesso!');
-                        atividadesDoDia = [];
-                        renderizarAtividades();
-                    }
-                }
+                
+                alert('✅ Atividades salvas com sucesso no Google Sheets!');
+                
+                atividadesDoDia = [];
+                renderizarAtividades();
+                
+                btnSalvar.textContent = textoOriginal;
+                btnSalvar.disabled = false;
+                
             } catch (error) {
                 alert('❌ Erro ao salvar: ' + error.message);
+                
+                const btnSalvar = document.querySelector('.btn-save-all');
+                if (btnSalvar) {
+                    btnSalvar.textContent = '💾 SALVAR TODAS NO GOOGLE SHEETS';
+                    btnSalvar.disabled = false;
+                }
             }
-        }
-
-        function configurarFotos() {
-            alert('📸 Para adicionar fotos de todos os colaboradores:\n\n1. Hospede as fotos online (ex: Imgur, Dropbox Public Link, etc.)\n2. Edite o array "colaboradores" neste código, substituindo ou adicionando a propriedade "imagem" com a URL direta da foto.\n3. Recarregue a página.');
         }
 
         window.addEventListener('DOMContentLoaded', inicializar);
@@ -1155,5 +1240,4 @@
         });
     </script>
 </body>
-
 </html>
